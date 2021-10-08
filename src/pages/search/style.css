@@ -1,0 +1,15 @@
+.search-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+}
+.search-wrapper input {
+    width: calc(100% - 1rem);
+    border: 1px solid black;
+    border-radius: 0;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}

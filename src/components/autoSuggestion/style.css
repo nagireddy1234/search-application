@@ -1,0 +1,21 @@
+.auto-suggestion-wrapper{
+ width: 100%;
+ box-shadow: 0 4px 10px 2px rgba(0,0,0,0.2);
+}
+.auto-suggestion-wrapper ul{
+    width: 100%;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+}
+
+.auto-suggestion-wrapper ul li{
+    text-align: left;
+    padding: 0.5rem;
+}
+.auto-suggestion-wrapper ul li:hover{
+    background-color: black;
+    color: #fff;
+    cursor: pointer;
+}
