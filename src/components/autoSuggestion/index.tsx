@@ -5,9 +5,15 @@ interface Props {
   data: string[];
   query: string;
   selected: number;
+  onSuggestItemClick: (i: number) => void;
 }
 
-const AutoSuggestion: FC<Props> = ({ data, query, selected }): JSX.Element => {
+const AutoSuggestion: FC<Props> = ({
+  data,
+  query,
+  selected,
+  onSuggestItemClick,
+}): JSX.Element => {
   const getSuggestion = (suggestion: string, i: number) => {
     const isExist = suggestion.includes(query);
 
@@ -15,7 +21,13 @@ const AutoSuggestion: FC<Props> = ({ data, query, selected }): JSX.Element => {
       const matched = suggestion.slice(0, query.length);
       const notMatched = suggestion.slice(query.length, suggestion.length);
       return (
-        <li key={suggestion} className={selected === i ? "query-selected" : ""}>
+        <li
+          key={suggestion}
+          className={selected === i ? "query-selected" : ""}
+          onClick={() => {
+            onSuggestItemClick(i);
+          }}
+        >
           <strong>{matched}</strong>
           {notMatched}
         </li>
@@ -23,7 +35,13 @@ const AutoSuggestion: FC<Props> = ({ data, query, selected }): JSX.Element => {
     }
 
     return (
-      <li key={suggestion} className={selected === i ? "query-selected" : ""}>
+      <li
+        key={suggestion}
+        className={selected === i ? "query-selected" : ""}
+        onClick={() => {
+          onSuggestItemClick(i);
+        }}
+      >
         {suggestion}
       </li>
     );
@@ -31,6 +49,7 @@ const AutoSuggestion: FC<Props> = ({ data, query, selected }): JSX.Element => {
 
   return (
     <div className="auto-suggestion-wrapper">
+      <ul></ul>
       <ul>{data.map((item: string, i: number) => getSuggestion(item, i))}</ul>
     </div>
   );

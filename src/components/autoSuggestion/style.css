@@ -1,6 +1,11 @@
 .auto-suggestion-wrapper {
-  width: 100%;
   box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 7rem;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
 }
 .auto-suggestion-wrapper ul {
   width: 100%;

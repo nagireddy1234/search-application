@@ -5,6 +5,8 @@
     flex-direction: column;
     width: 50%;
     margin: auto;
+    position: relative;
+    margin-top: 2rem;
 }
 .search-wrapper input {
     width: calc(100% - 1rem);

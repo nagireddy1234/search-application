@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { searchAPIcall } from "../../api";
 import AutoSuggestion from "../../components/autoSuggestion";
 import "./style.css";
+import { saveSearchData } from "../../util/localStorage";
 
 const Search = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -10,6 +11,7 @@ const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selected, setSelected] = useState(-1);
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleAPIcall = debounce(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,51 +31,78 @@ const Search = () => {
     500
   );
 
-  const handleItemSelection = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    let newSelected = 0;
-    if (e.key === "ArrowUp" && selected > 0) {
-      newSelected = selected - 1;
-      setSelected(newSelected);
-    } else if (selected === 0 && e.key === "ArrowUp") {
-      setSelected(searchResults.length);
-    }
-    if (e.key === "ArrowDown" && selected < searchResults.length) {
-      newSelected = selected + 1;
-      setSelected(newSelected);
-    } else if (selected === searchResults.length && e.key === "ArrowDown") {
-      setSelected(0);
-    }
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      const input: HTMLInputElement | null =
-        document.querySelector(".search-input");
-      if (input && newSelected !== searchResults.length) {
-        input.value = searchResults[newSelected];
+  const handleItemSelection = async (
+    e: React.KeyboardEvent<HTMLDivElement>
+  ) => {
+    if (showSuggestion) {
+      let newSelected = 0;
+      if (e.key === "ArrowUp" && selected > 0) {
+        newSelected = selected - 1;
+        setSelected(newSelected);
+      } else if (selected === 0 && e.key === "ArrowUp") {
+        setSelected(searchResults.length);
       }
-    }
+      if (e.key === "ArrowDown" && selected < searchResults.length) {
+        newSelected = selected + 1;
+        setSelected(newSelected);
+      } else if (selected === searchResults.length && e.key === "ArrowDown") {
+        setSelected(0);
+      }
+      if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        const input: HTMLInputElement | null =
+          document.querySelector(".search-input");
+        if (input && newSelected !== searchResults.length) {
+          input.value = searchResults[newSelected];
+        }
+      }
 
-    if (e.key === "Enter") {
-      setShowSuggestion(false);
+      if (e.key === "Enter") {
+        setShowSuggestion(false);
+        setSearchQuery(searchResults[selected]);
+        saveSearchData(searchResults[selected]);
+      }
     }
   };
 
+  const handleSuggestionClick = (i: number) => {
+    setSearchQuery(searchResults[i]);
+    const input: HTMLInputElement | null =
+      document.querySelector(".search-input");
+    if (input && i !== searchResults.length) {
+      input.value = searchResults[i];
+      saveSearchData(searchResults[i]);
+    }
+    setShowSuggestion(false);
+  };
+
   return (
-    <div className="search-wrapper">
-      <input
-        className="search-input"
-        ref={inputRef}
-        type="text"
-        placeholder="search your query"
-        onChange={handleAPIcall}
-        onKeyDown={handleItemSelection}
-      />
-      {showSuggestion && (
-        <AutoSuggestion
-          data={searchResults}
-          query={query}
-          selected={selected}
+    <>
+      <div className="search-wrapper">
+        <h2>Search Anything Here</h2>
+        <input
+          className="search-input"
+          ref={inputRef}
+          type="text"
+          placeholder="search your query"
+          onChange={handleAPIcall}
+          onKeyDown={handleItemSelection}
         />
+        {showSuggestion && (
+          <AutoSuggestion
+            data={searchResults}
+            query={query}
+            selected={selected}
+            onSuggestItemClick={handleSuggestionClick}
+          />
+        )}
+      </div>
+      {searchQuery && (
+        <div>
+          <h2>Selected suggestion:</h2>
+          {searchQuery}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
