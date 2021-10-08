@@ -4,18 +4,24 @@ import "./style.css";
 interface Props {
   data: string[];
   query: string;
+  selected: number;
 }
 
 const AutoSuggestion: FC<Props> = ({ data, query }): JSX.Element => {
   const getSuggestion = (suggestion: string) => {
     const words = suggestion.split(query);
-    console.log(words);
-    return (
-      <li key={suggestion}>
-        <strong>{query}</strong>
-        {words[1]}
-      </li>
-    );
+    const isExist = suggestion.includes(query);
+
+    if (isExist) {
+      return (
+        <li key={suggestion}>
+          <strong>{query}</strong>
+          {words[1]}
+        </li>
+      );
+    }
+
+    return <li key={suggestion}>{suggestion}</li>;
   };
 
   return (
