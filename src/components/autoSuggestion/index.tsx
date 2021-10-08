@@ -7,26 +7,31 @@ interface Props {
   selected: number;
 }
 
-const AutoSuggestion: FC<Props> = ({ data, query }): JSX.Element => {
-  const getSuggestion = (suggestion: string) => {
-    const words = suggestion.split(query);
+const AutoSuggestion: FC<Props> = ({ data, query, selected }): JSX.Element => {
+  const getSuggestion = (suggestion: string, i: number) => {
     const isExist = suggestion.includes(query);
 
     if (isExist) {
+      const matched = suggestion.slice(0, query.length);
+      const notMatched = suggestion.slice(query.length, suggestion.length);
       return (
-        <li key={suggestion}>
-          <strong>{query}</strong>
-          {words[1]}
+        <li key={suggestion} className={selected === i ? "query-selected" : ""}>
+          <strong>{matched}</strong>
+          {notMatched}
         </li>
       );
     }
 
-    return <li key={suggestion}>{suggestion}</li>;
+    return (
+      <li key={suggestion} className={selected === i ? "query-selected" : ""}>
+        {suggestion}
+      </li>
+    );
   };
 
   return (
     <div className="auto-suggestion-wrapper">
-      <ul>{data.map((item: string) => getSuggestion(item))}</ul>
+      <ul>{data.map((item: string, i: number) => getSuggestion(item, i))}</ul>
     </div>
   );
 };

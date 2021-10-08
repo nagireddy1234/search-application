@@ -9,21 +9,7 @@ const Search = () => {
   const [query, setQuery] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [selected, setSelected] = useState(-1);
-
-  useEffect(() => {
-    if (inputRef?.current) {
-      inputRef.current.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowUp" && selected < searchResults.length) {
-          const newSelected = selected + 1;
-          setSelected(newSelected);
-        }
-        if (e.key === "ArrowDown" && selected > 0) {
-          const newSelected = selected - 1;
-          setSelected(newSelected);
-        }
-      });
-    }
-  }, [inputRef, selected, searchResults]);
+  const [showSuggestion, setShowSuggestion] = useState(false);
 
   const handleAPIcall = debounce(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,23 +19,60 @@ const Search = () => {
         const result = await searchAPIcall(value);
         if (result) {
           setSearchResults(result?.data[1]);
+          setShowSuggestion(true);
         }
       } else {
         setSearchResults([]);
+        setShowSuggestion(false);
       }
     },
     500
   );
 
+  const handleItemSelection = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    let newSelected = 0;
+    if (e.key === "ArrowUp" && selected > 0) {
+      newSelected = selected - 1;
+      setSelected(newSelected);
+    } else if (selected === 0 && e.key === "ArrowUp") {
+      setSelected(searchResults.length);
+    }
+    if (e.key === "ArrowDown" && selected < searchResults.length) {
+      newSelected = selected + 1;
+      setSelected(newSelected);
+    } else if (selected === searchResults.length && e.key === "ArrowDown") {
+      setSelected(0);
+    }
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      const input: HTMLInputElement | null =
+        document.querySelector(".search-input");
+      if (input && newSelected !== searchResults.length) {
+        input.value = searchResults[newSelected];
+      }
+    }
+
+    if (e.key === "Enter") {
+      setShowSuggestion(false);
+    }
+  };
+
   return (
     <div className="search-wrapper">
       <input
+        className="search-input"
         ref={inputRef}
         type="text"
         placeholder="search your query"
         onChange={handleAPIcall}
+        onKeyDown={handleItemSelection}
       />
-      <AutoSuggestion data={searchResults} query={query} selected={selected} />
+      {showSuggestion && (
+        <AutoSuggestion
+          data={searchResults}
+          query={query}
+          selected={selected}
+        />
+      )}
     </div>
   );
 };
