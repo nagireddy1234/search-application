@@ -94,7 +94,7 @@ const Search = () => {
   return (
     <>
       <div className="search-wrapper">
-        <h2>Search Anything Here</h2>
+        <h1>Search Anything Here</h1>
         <input
           className="search-input"
           ref={inputRef}
