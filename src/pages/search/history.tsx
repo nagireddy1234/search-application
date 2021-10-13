@@ -29,12 +29,14 @@ const History: FC<Props> = ({
 
   return (
     <div className="history-root-wrapper">
-      <div className="history-container">
-        <h2>Search history</h2>
-        <button className="underline-text-btn" onClick={onClearSeachHistory}>
-          Clear search history
-        </button>
-      </div>
+      {data.length > 0 && (
+        <div className="history-container">
+          <h2>Search history</h2>
+          <button className="underline-text-btn" onClick={onClearSeachHistory}>
+            Clear search history
+          </button>
+        </div>
+      )}
       <ul className="search-result-wrapper">
         {data.map((item: searchHistoryProps, i: number) => (
           <li key={item.result}>

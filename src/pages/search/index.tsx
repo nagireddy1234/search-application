@@ -99,6 +99,9 @@ const Search = () => {
     setSavedSearchedData([]);
     setQuery("");
   };
+  // const removeAutosuggestion = () => {
+  //   setShowSuggestion(false);
+  // };
 
   return (
     <>
@@ -112,6 +115,7 @@ const Search = () => {
             placeholder="search your query"
             onChange={handleAPIcall}
             onKeyDown={handleItemSelection}
+            // onBlur={removeAutosuggestion}
           />
           {showSuggestion && (
             <span className="close-icon" onClick={handleclearAutosuggestion}>
