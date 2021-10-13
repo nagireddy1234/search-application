@@ -10,8 +10,8 @@ function App() {
       <Suspense fallback={<div>loading...</div>}>
         <Router>
           <Switch>
-            <Route exact path="/" component={CssWizardry} />
-            <Route exact path="/search" component={Search} />
+            <Route exact path="/" component={Search} />
+            <Route exact path="/button" component={CssWizardry} />
           </Switch>
         </Router>
       </Suspense>

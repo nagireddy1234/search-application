@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { searchAPIcall } from "../../api";
 import AutoSuggestion from "../../components/autoSuggestion";
@@ -78,6 +78,15 @@ const Search = () => {
     setSavedSearchedData(getSavedSearchData());
   };
 
+  const handleclearAutosuggestion = () => {
+    const input: HTMLInputElement | null =
+      document.querySelector(".search-input");
+    if (input) {
+      input.value = "";
+    }
+    setShowSuggestion(false);
+  };
+
   const handleDeleteHistory = (i: number) => {
     const data = [...savedSearchedData];
     data.splice(i, 1);
@@ -93,29 +102,36 @@ const Search = () => {
 
   return (
     <>
-      <div className="search-wrapper">
+      <div className="search-main-wrapper">
         <h1>Search Anything Here</h1>
-        <input
-          className="search-input"
-          ref={inputRef}
-          type="text"
-          placeholder="search your query"
-          onChange={handleAPIcall}
-          onKeyDown={handleItemSelection}
-        />
-        {showSuggestion && (
-          <AutoSuggestion
-            data={searchResults}
-            query={query}
-            selected={selected}
-            onSuggestItemClick={handleSuggestionClick}
+        <div className="search-wrapper">
+          <input
+            className="search-input"
+            ref={inputRef}
+            type="text"
+            placeholder="search your query"
+            onChange={handleAPIcall}
+            onKeyDown={handleItemSelection}
           />
-        )}
-        <History
-          data={savedSearchedData}
-          onDeleteIconClick={handleDeleteHistory}
-          onClearSeachHistory={handleClearSearchHistory}
-        />
+          {showSuggestion && (
+            <span className="close-icon" onClick={handleclearAutosuggestion}>
+              ✕
+            </span>
+          )}
+          {showSuggestion && (
+            <AutoSuggestion
+              data={searchResults}
+              query={query}
+              selected={selected}
+              onSuggestItemClick={handleSuggestionClick}
+            />
+          )}
+          <History
+            data={savedSearchedData}
+            onDeleteIconClick={handleDeleteHistory}
+            onClearSeachHistory={handleClearSearchHistory}
+          />
+        </div>
       </div>
     </>
   );
