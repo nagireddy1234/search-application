@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { searchAPIcall } from "../../api";
 import AutoSuggestion from "../../components/autoSuggestion";
 import "./style.css";
-import { saveSearchData } from "../../util/localStorage";
+import { getSavedSearchData, saveSearchData } from "../../util/localStorage";
+import History from "./history";
 
 const Search = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -11,7 +12,9 @@ const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selected, setSelected] = useState(-1);
   const [showSuggestion, setShowSuggestion] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [savedSearchedData, setSavedSearchedData] = useState(
+    getSavedSearchData()
+  );
 
   const handleAPIcall = debounce(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,14 +61,13 @@ const Search = () => {
 
       if (e.key === "Enter") {
         setShowSuggestion(false);
-        setSearchQuery(searchResults[selected]);
         saveSearchData(searchResults[selected]);
+        setSavedSearchedData(getSavedSearchData());
       }
     }
   };
 
   const handleSuggestionClick = (i: number) => {
-    setSearchQuery(searchResults[i]);
     const input: HTMLInputElement | null =
       document.querySelector(".search-input");
     if (input && i !== searchResults.length) {
@@ -73,6 +75,20 @@ const Search = () => {
       saveSearchData(searchResults[i]);
     }
     setShowSuggestion(false);
+    setSavedSearchedData(getSavedSearchData());
+  };
+
+  const handleDeleteHistory = (i: number) => {
+    const data = [...savedSearchedData];
+    data.splice(i, 1);
+    localStorage.setItem("searchResults", JSON.stringify(data));
+    setSavedSearchedData(data);
+  };
+
+  const handleClearSearchHistory = () => {
+    localStorage.setItem("searchResults", JSON.stringify([]));
+    setSavedSearchedData([]);
+    setQuery("");
   };
 
   return (
@@ -95,13 +111,12 @@ const Search = () => {
             onSuggestItemClick={handleSuggestionClick}
           />
         )}
+        <History
+          data={savedSearchedData}
+          onDeleteIconClick={handleDeleteHistory}
+          onClearSeachHistory={handleClearSearchHistory}
+        />
       </div>
-      {searchQuery && (
-        <div>
-          <h2>Selected suggestion:</h2>
-          {searchQuery}
-        </div>
-      )}
     </>
   );
 };
