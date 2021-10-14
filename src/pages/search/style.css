@@ -57,24 +57,40 @@
   list-style: none;
   max-height: 15rem;
   overflow-y: auto;
-  padding: 1rem 0.5rem;
+  padding: 0 0.5rem;
   overflow-x: hidden;
 }
 .search-result-wrapper li {
   display: flex;
   align-items: center;
+  text-align: left;
   justify-content: space-between;
   border-top: 2px solid gray;
 }
+
 .search-result-wrapper li:last-child {
   border-bottom: 2px solid gray;
+}
+.search-result-wrapper li p {
+  text-align: left;
 }
 .search-result-wrapper li .btn-date-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-align: left;
 }
 .search-result-wrapper li .btn-date-wrapper .close-btn {
   margin-left: 1rem;
   cursor: pointer;
+  text-align: left;
+}
+
+/* media quaries */
+
+@media screen and (max-width: 400px) {
+  .history-container h2{
+    text-align: left;
+    font-size: 1.4rem;
+  }
 }
