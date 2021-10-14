@@ -49,7 +49,6 @@ const AutoSuggestion: FC<Props> = ({
 
   return (
     <div className="auto-suggestion-wrapper">
-      <ul></ul>
       <ul>{data.map((item: string, i: number) => getSuggestion(item, i))}</ul>
     </div>
   );

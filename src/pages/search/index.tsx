@@ -59,7 +59,8 @@ const Search = () => {
         }
       }
 
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && searchResults[selected]) {
+        console.log(searchResults[selected])
         setShowSuggestion(false);
         saveSearchData(searchResults[selected]);
         setSavedSearchedData(getSavedSearchData());
@@ -99,9 +100,10 @@ const Search = () => {
     setSavedSearchedData([]);
     setQuery("");
   };
-  // const removeAutosuggestion = () => {
-  //   setShowSuggestion(false);
-  // };
+
+  const removeAutosuggestion = () => {
+    setShowSuggestion(false);
+  };
 
   return (
     <>
@@ -115,14 +117,13 @@ const Search = () => {
             placeholder="search your query"
             onChange={handleAPIcall}
             onKeyDown={handleItemSelection}
-            // onBlur={removeAutosuggestion}
           />
           {showSuggestion && (
-            <span className="close-icon" onClick={handleclearAutosuggestion}>
+            <div className="close-icon" onClick={handleclearAutosuggestion}>
               ✕
-            </span>
+            </div>
           )}
-          {showSuggestion && (
+          {showSuggestion && searchResults.length > 0 && (
             <AutoSuggestion
               data={searchResults}
               query={query}
@@ -130,12 +131,20 @@ const Search = () => {
               onSuggestItemClick={handleSuggestionClick}
             />
           )}
-          <History
-            data={savedSearchedData}
-            onDeleteIconClick={handleDeleteHistory}
-            onClearSeachHistory={handleClearSearchHistory}
-          />
+          <div
+            className={`w-100 ${
+              showSuggestion && searchResults.length > 0 ? "stopmove" : ""
+            }`}
+            onClick={removeAutosuggestion}
+          >
+            <History
+              data={savedSearchedData}
+              onDeleteIconClick={handleDeleteHistory}
+              onClearSeachHistory={handleClearSearchHistory}
+            />
+          </div>
         </div>
+        <div className="outside-area" onClick={removeAutosuggestion} />
       </div>
     </>
   );
