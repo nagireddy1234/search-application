@@ -74,6 +74,7 @@
 }
 .search-result-wrapper li p {
   text-align: left;
+  width: 153px;
 }
 .search-result-wrapper li .btn-date-wrapper {
   display: flex;
@@ -90,16 +91,16 @@
 /* media quaries */
 
 @media screen and (max-width: 400px) {
-  .history-container h2{
+  .history-container h2 {
     text-align: left;
     font-size: 1.4rem;
   }
 }
 
-.w-100{
+.w-100 {
   width: 100%;
 }
-.outside-area{
+.outside-area {
   width: 100%;
   height: 100vh;
   position: fixed;
@@ -109,6 +110,6 @@
   bottom: 0;
   z-index: 0;
 }
-.stopmove{
+.stopmove {
   transform: translateY(-21px);
 }
