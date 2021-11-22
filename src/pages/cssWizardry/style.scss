@@ -76,7 +76,7 @@ button {
 // Variables
 $color: #F0A456;
 $color-dark: #a53125;
-$speed: "0.25s";
+$speed: "0.5s";
 $transition: all #{$speed} cubic-bezier(0.31, -0.105, 0.43, 1.4);
 
 /* Main Styles */
@@ -139,7 +139,9 @@ $transition: all #{$speed} cubic-bezier(0.31, -0.105, 0.43, 1.4);
       width: 100%;
       border-radius: 0;
       margin-right: 0;
-      color: red;
+      color: white;
+      background-color: red;
+      font-size: 3rem;
     }
   }
 }

@@ -6,9 +6,7 @@ const CssWizardry: FC = (): JSX.Element => {
     <>
       <a className="button" href="/#" role="button">
         <span>delete</span>
-        <div className="icon">
-            ✖
-        </div>
+        <div className="icon">✖</div>
       </a>
     </>
   );
