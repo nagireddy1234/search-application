@@ -60,7 +60,7 @@ const Search = () => {
       }
 
       if (e.key === "Enter" && searchResults[selected]) {
-        console.log(searchResults[selected])
+        console.log(searchResults[selected]);
         setShowSuggestion(false);
         saveSearchData(searchResults[selected]);
         setSavedSearchedData(getSavedSearchData());
@@ -74,6 +74,7 @@ const Search = () => {
     if (input && i !== searchResults.length) {
       input.value = searchResults[i];
       saveSearchData(searchResults[i]);
+      input.value = "";
     }
     setShowSuggestion(false);
     setSavedSearchedData(getSavedSearchData());
