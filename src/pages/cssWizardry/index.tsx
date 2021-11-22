@@ -1,11 +1,16 @@
 import React, { FC } from "react";
-import "./style.css";
+import "./style.scss";
 
 const CssWizardry: FC = (): JSX.Element => {
   return (
-    <div className="wrapper">
-      <button className="delete-btn">Delete</button>
-    </div>
+    <>
+      <a className="button" href="/#" role="button">
+        <span>delete</span>
+        <div className="icon">
+            ✖
+        </div>
+      </a>
+    </>
   );
 };
 
