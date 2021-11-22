@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import debounce from "lodash.debounce";
+// import debounce from "lodash.debounce";
 import { searchAPIcall } from "../../api";
 import AutoSuggestion from "../../components/autoSuggestion";
 import "./style.css";
@@ -16,7 +16,7 @@ const Search = () => {
     getSavedSearchData()
   );
 
-  const handleAPIcall = debounce(
+  const handleAPIcall = 
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
       if (value) {
@@ -30,9 +30,7 @@ const Search = () => {
         setSearchResults([]);
         setShowSuggestion(false);
       }
-    },
-    500
-  );
+    };
 
   const handleItemSelection = async (
     e: React.KeyboardEvent<HTMLDivElement>
