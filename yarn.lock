@@ -1825,6 +1825,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/sass@^1.43.0":
+  version "1.43.0"
+  resolved "https://registry.yarnpkg.com/@types/sass/-/sass-1.43.0.tgz#b4cebe057d887ed66dc6813fd6cbef22043057bb"
+  integrity sha512-DPSXNJ1rYLo88GyF9tuB4bsYGfpKI1a4+wOQmc+LI1SUoocm9QLRSpz0GxxuyjmJsYFIQo/dDlRSSpIXngff+w==
+  dependencies:
+    "@types/node" "*"
+
 "@types/scheduler@*":
   version "0.16.2"
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
@@ -7730,7 +7737,7 @@ node-releases@^1.1.61, node-releases@^1.1.70:
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-1.1.70.tgz"
   integrity sha512-Slf2s69+2/uAD79pVVQo8uSiC34+g8GWY8UH2Qtqv34ZfhYrxpYpfzs9Js9d6O0mbDmALuxaTlplnBTnSELcrw==
 
-node-sass@4.14.1:
+node-sass@4.14:
   version "4.14.1"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.14.1.tgz#99c87ec2efb7047ed638fb4c9db7f3a42e2217b5"
   integrity sha512-sjCuOlvGyCJS40R8BscF5vhVlQjNN069NtQ1gSxyK1u9iqvn6tf7O1R4GNowVZfiZUCRt5MmMs1xd+4V/7Yr0g==
